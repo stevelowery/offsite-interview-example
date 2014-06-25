@@ -1,0 +1,21 @@
+<project name="offsite-interview" default="retrieve" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property name="lib.dir" value="lib" />
+
+	<target name="retrieve" depends="clean,resolve">
+		<ivy:retrieve pattern="${lib.dir}/[artifact]-[revision].[ext]" />
+	</target>
+
+	<target name="cleancache">
+		<ivy:cleancache />
+	</target>
+
+	<target name="clean">
+		<delete dir="${lib.dir}" />
+		<mkdir dir="${lib.dir}" />
+	</target>
+
+	<target name="resolve">
+		<ivy:resolve file="ivy.xml" />
+	</target>
+</project>
