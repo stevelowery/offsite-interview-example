@@ -19,7 +19,6 @@ import com.gatesbiz.interview.example.model.Employee;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.persist.PersistService;
-import com.google.inject.persist.Transactional;
 
 @RunWith(JukitoRunner.class)
 @UseModules({
@@ -50,7 +49,6 @@ public class EmployeeDaoImplTest extends AbstractModule {
 	}
 
 	@Before
-	@Transactional
 	public void setUp(EmployeeDao employeeDao, CompanyDao companyDao) {
 
 		Company company = companyDao.findByName(THE_BLUTH_COMPANY);

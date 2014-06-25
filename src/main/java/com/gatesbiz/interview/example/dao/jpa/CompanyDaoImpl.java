@@ -1,5 +1,7 @@
 package com.gatesbiz.interview.example.dao.jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import com.gatesbiz.interview.example.dao.CompanyDao;
@@ -23,6 +25,10 @@ public class CompanyDaoImpl implements CompanyDao {
 
 	@Override
 	public Company findByName(String name) {
-		return entityManager.createNamedQuery("Company.findByName", Company.class).setParameter("name", name).getSingleResult();
+		List<Company> list = entityManager.createNamedQuery("Company.findByName", Company.class).setParameter("name", name).setMaxResults(1).getResultList();
+		if (list == null || list.isEmpty()) {
+			return null;
+		}
+		return list.get(0);
 	}
 }
