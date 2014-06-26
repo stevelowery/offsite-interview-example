@@ -11,19 +11,18 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.gatesbiz.interview.example.dao.CompanyDao;
-import com.gatesbiz.interview.example.dao.EmployeeDao;
-import com.gatesbiz.interview.example.inject.OffsiteInterviewExampleModule;
-import com.gatesbiz.interview.example.model.Company;
-import com.gatesbiz.interview.example.model.Employee;
+import com.bluthco.dao.CompanyDao;
+import com.bluthco.dao.EmployeeDao;
+import com.bluthco.dao.jpa.CompanyDaoImpl;
+import com.bluthco.dao.jpa.EmployeeDaoImpl;
+import com.bluthco.model.Company;
+import com.bluthco.model.Employee;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.persist.PersistService;
 
 @RunWith(JukitoRunner.class)
-@UseModules({
-		OffsiteInterviewExampleModule.class, EmployeeDaoImplTest.class,
-})
+@UseModules(EmployeeDaoImplTest.class)
 public class EmployeeDaoImplTest extends AbstractModule {
 
 	private static final String THE_BLUTH_COMPANY = "The Bluth Company";
@@ -53,17 +52,17 @@ public class EmployeeDaoImplTest extends AbstractModule {
 
 		Company company = companyDao.findByName(THE_BLUTH_COMPANY);
 		if (company == null) {
-			company = Company.of(THE_BLUTH_COMPANY);
+			company = Company.from(THE_BLUTH_COMPANY);
 			companyDao.persist(company);
 
 			Employee[] employees = new Employee[] {
-					Employee.of(company, "Michael", "Bluth"),
-					Employee.of(company, "Gob", "Bluth"),
-					Employee.of(company, "Lindsey", "Bluth"),
-					Employee.of(company, "Buster", "Bluth"),
-					Employee.of(company, "George Michael", "Bluth"),
-					Employee.of(company, "George Sr", "Bluth"),
-					Employee.of(company, "Lucille", "Bluth")
+					Employee.from(company, "Michael", "Bluth"),
+					Employee.from(company, "Gob", "Bluth"),
+					Employee.from(company, "Lindsey", "Bluth"),
+					Employee.from(company, "Buster", "Bluth"),
+					Employee.from(company, "George Michael", "Bluth"),
+					Employee.from(company, "George Sr", "Bluth"),
+					Employee.from(company, "Lucille", "Bluth")
 			};
 			employeeDao.persist(employees);
 		}
