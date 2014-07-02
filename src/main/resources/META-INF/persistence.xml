@@ -9,7 +9,7 @@
          <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver"/>
          <property name="javax.persistence.jdbc.user" value="SA"/>
          <property name="javax.persistence.jdbc.password" value=""/>
-         <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:example;shutdown=true"/>
+         <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:hsql://localhost/example;shutdown=true"/>
         
          <property name="hibernate.hbm2ddl.auto" value="update" />
          
