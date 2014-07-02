@@ -13,18 +13,18 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.bluthco.inject.BluthModule;
 import com.bluthco.model.Company;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.inject.persist.PersistService;
 import com.google.inject.persist.Transactional;
-import com.google.inject.persist.jpa.JpaPersistModule;
 
 @RunWith(JukitoRunner.class)
-@UseModules(CompanyDaoImplTest.class)
+@UseModules({
+		BluthModule.class, CompanyDaoImplTest.class
+})
 public class CompanyDaoImplTest extends AbstractModule {
 
 	@Inject
@@ -43,21 +43,6 @@ public class CompanyDaoImplTest extends AbstractModule {
 	@Override
 	protected void configure() {
 		requestStaticInjection(CompanyDaoImplTest.class);
-		install(new JpaPersistModule("example"));
-	}
-
-	@Singleton
-	@Provides
-	@Named(BLUTH_COMPANY_NAME)
-	protected Company provideBluthCompany() {
-		return Company.from(BLUTH_COMPANY_NAME);
-	}
-
-	@Singleton
-	@Provides
-	@Named(BANANA_STAND_NAME)
-	protected Company provideBananaStand() {
-		return Company.from(BANANA_STAND_NAME);
 	}
 
 	@Before

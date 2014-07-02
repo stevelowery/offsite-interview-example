@@ -12,19 +12,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.bluthco.inject.BluthModule;
 import com.bluthco.model.Company;
 import com.bluthco.model.Employee;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.google.inject.persist.PersistService;
 import com.google.inject.persist.Transactional;
-import com.google.inject.persist.jpa.JpaPersistModule;
 
 @RunWith(JukitoRunner.class)
-@UseModules(EmployeeDaoImplTest.class)
+@UseModules({
+		BluthModule.class, EmployeeDaoImplTest.class
+})
 public class EmployeeDaoImplTest extends AbstractModule {
 
 	@Inject
@@ -43,28 +43,11 @@ public class EmployeeDaoImplTest extends AbstractModule {
 	@Override
 	protected void configure() {
 		requestStaticInjection(EmployeeDaoImplTest.class);
-		install(new JpaPersistModule("example"));
-	}
-
-	@Singleton
-	@Provides
-	@Named(BLUTH_COMPANY_NAME)
-	protected Company provideBluthCompany() {
-		return Company.from(BLUTH_COMPANY_NAME);
-	}
-
-	@Singleton
-	@Provides
-	@Named(BANANA_STAND_NAME)
-	protected Company provideBananaStand() {
-		return Company.from(BANANA_STAND_NAME);
 	}
 
 	@Before
 	@Transactional
 	public void setUp(EmployeeDaoImpl employeeDao, @Named(BLUTH_COMPANY_NAME) Company bluthCompany, @Named(BANANA_STAND_NAME) Company bananaStand) {
-		// companyDao.persist(bluthCompany, bananaStand);
-
 		employeeDao.persist(new Employee[] {
 				Employee.from(bluthCompany, "Bluth", "George"),
 				Employee.from(bluthCompany, "Bluth", "Lucille"),
